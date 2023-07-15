@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { SnackbarService } from '../services/snackbar.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,7 +10,10 @@ import { SnackbarService } from '../services/snackbar.service';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
-  constructor(private fb:FormBuilder, public userService:UserService, public snackBar:SnackbarService){
+  constructor(private fb:FormBuilder,
+     private userService:UserService,
+      private snackBar:SnackbarService,
+      private ngxService:NgxUiLoaderService){
 
   }
 
@@ -18,7 +22,8 @@ export class SignUpComponent {
     'name': ['', Validators.required],
     'surname': ['', Validators.required],
     'birthdate': ['', Validators.required],
-    'pwd': ['', Validators.required]
+    'pwd': ['', Validators.required],
+    'confPwd': ['', Validators.required]
   })
   
   get email(){
@@ -36,19 +41,30 @@ export class SignUpComponent {
   get pwd(){
     return this.signupForm.get('pwd') as FormControl;
   }
+  get confPwd(){
+    return this.signupForm.get('confPwd') as FormControl;
+  }
+  
 
 
 
   ngOnInit(): void{
 
   }
+  validatePwd(){
+    return this.signupForm.controls['pwd'].value == this.signupForm.controls['confPwd'].value
+  }
+
   signUp(){
+    this.ngxService.start();
     this.userService.signup(JSON.stringify(this.signupForm.value)).subscribe(
       (response:any) => {
+        this.ngxService.stop();
         this.snackBar.openSnackBar(response?.message,'');
       },
       error => {
         console.error(error);
+        this.ngxService.stop();
         this.snackBar.openSnackBar(error?.error.message,'error');
       }
     )

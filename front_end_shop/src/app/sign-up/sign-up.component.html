@@ -1,6 +1,6 @@
 
 
-
+<h1>Create Account</h1>
 <form (ngSubmit)="signUp()" [formGroup]="signupForm" >
     <div class="mb-2">
         <label class="form-label">
@@ -8,10 +8,10 @@
         </label>
         <input type="email" name="email" formControlName="email" class="form-control" >
         <div class="alert alert-danger mt-2" [hidden]="email.valid||email.pristine">
-            <span *ngIf="email?.errors?.['email']">
+            <span *ngIf="email?.errors?.['required']">
                 The Email is required
             </span>
-            <span *ngIf="email?.errors?.['required']">
+            <span *ngIf="email?.errors?.['email']">
                 Bad Email Format
             </span>
         </div>
@@ -52,8 +52,21 @@
             The Password is Required
         </div>
     </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Confirm Password:
+        </label>
+        <input type="password" name="confPwd" formControlName="confPwd" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="confPwd.valid||confPwd.pristine">
+            You need to confirm the Password
+        </div>
+        <div class="alert alert-danger mt-2" [hidden]="validatePwd()||confPwd.pristine">
+            The Passwords dont match
+        </div>
+    </div>
+    
 
-    <button class="btn btn-primary mt-2" [disabled]="signupForm.invalid">
+    <button class="btn btn-primary mt-2" [disabled]="signupForm.invalid || !validatePwd()">
         Sign up
     </button>
 </form>

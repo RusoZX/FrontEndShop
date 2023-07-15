@@ -17,4 +17,15 @@ export class UserService {
       headers:new HttpHeaders().set('Content-Type','application/json')
     });
   }
+  login(data:string){
+    return this.httpClient.post(this.url+"/user/login",data,{
+      headers:new HttpHeaders().set('Content-Type','application/json')
+    });
+  }
+  getProfile(){
+    const jwtToken = localStorage.getItem('jwt');
+    return this.httpClient.get(this.url+"/user/profile",{
+      headers:new HttpHeaders().set('Authorization', 'Bearer '+jwtToken)
+    })
+  }
 }
