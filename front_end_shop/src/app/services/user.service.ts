@@ -23,9 +23,19 @@ export class UserService {
     });
   }
   getProfile(){
-    const jwtToken = localStorage.getItem('jwt');
     return this.httpClient.get(this.url+"/user/profile",{
-      headers:new HttpHeaders().set('Authorization', 'Bearer '+jwtToken)
+      headers:new HttpHeaders().set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
     })
+  }
+  checkToken(){
+    const jwtToken = localStorage.getItem('jwt');
+    return this.httpClient.get(this.url+"/user/check?token="+jwtToken)
+  }
+  update(data:string){
+    return this.httpClient.post(this.url+"/user/profile/update",data,{
+      headers:new HttpHeaders()
+      .set('Content-Type','application/json')
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
   }
 }

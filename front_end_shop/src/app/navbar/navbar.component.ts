@@ -1,10 +1,55 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { SnackbarService } from '../services/snackbar.service';
+import { UserService } from '../services/user.service';
+import { GlobalConstants } from '../global-constants';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit{
+  constructor(private router:Router,
+    
+    private snackBar:SnackbarService,
+    private userService:UserService){
 
+  }
+  registered = false;
+  ngOnInit(): void {
+      this.checkToken();
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.checkToken();
+        }
+      });
+  }
+  logout(){
+    if(confirm(GlobalConstants.confLogout)){
+      this.registered= false;
+    localStorage.removeItem('jwt');
+    }
+    
+  }
+  checkToken(){
+    var token = localStorage.getItem('jwt');
+    if(token == '')
+      this.registered = false;
+    else{
+      this.userService.checkToken().subscribe(
+        (response:any) => {
+          this.registered = true;
+        },
+        error => {
+          console.error(error);
+          this.registered= false;
+          localStorage.removeItem('jwt');
+          if(error?.error.message == GlobalConstants.expired)
+            this.snackBar.openSnackBar(GlobalConstants.expiredMsg,'error');
+        }
+      )
+    }
+
+  }
 }
