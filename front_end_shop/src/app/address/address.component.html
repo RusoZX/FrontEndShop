@@ -1,0 +1,14 @@
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">Address</h3>
+        <p class="card-text"><strong>Country:</strong> {{ address.country }}</p>
+        <p class="card-text"><strong>City:</strong> {{ address.city }}</p>
+        <p class="card-text"><strong>Postal Code:</strong> {{ address.postalCode }}</p>
+        <p class="card-text"><strong>Street:</strong> {{ address.street }}</p>
+        <p class="card-text"><strong>Home:</strong> {{ address.home }}</p>
+        <p class="card-text"><strong>Apartment:</strong> {{ address.apartment }}</p>
+      </div>
+  </div>
+  <button mat-button (click)="saveShared()" routerLink="/user/editaddress" class="btn btn-primary bg-primary mt-2">Edit</button>
+
+  <button mat-button (click)="remove()" class="btn btn-danger bg-danger mt-2">Remove</button>

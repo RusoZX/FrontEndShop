@@ -17,5 +17,7 @@
       <h4 class="card-title">Address</h4>
       <p class="card-text"><strong>City:</strong> {{ address.city }}</p>
       <p class="card-text"><strong>Street:</strong> {{ address.street }}</p>
+      <button mat-button routerLink="/user/address/{{ address.id}}" class="btn btn-primary bg-primary mt-2">See more</button>
     </div>
   </div>
+  <button mat-button routerLink="/user/addaddress" class="btn btn-success bg-success mt-2">Add a New Address</button>

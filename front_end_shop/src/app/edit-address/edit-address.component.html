@@ -1,0 +1,59 @@
+<form (ngSubmit)="update()" [formGroup]="updateForm" >
+    <div class="mb-2">
+        <label class="form-label">
+            Country:
+        </label>
+        <input type="text" name="country" formControlName="country" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="country.valid||country.pristine">
+            The Country is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            City:
+        </label>
+        <input type="text" name="city" formControlName="city" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="city.valid||city.pristine">
+            The City is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Postal Code:
+        </label>
+        <input type="text" name="postalCode" formControlName="postalCode" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="postalCode.valid||postalCode.pristine">
+            The Postal Code is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Street:
+        </label>
+        <input type="text" name="street" formControlName="street" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="street.valid||street.pristine">
+            The Street is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Home:
+        </label>
+        <input type="text" name="home" formControlName="home" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="home.valid||home.pristine">
+            The Home is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Apartment:
+        </label>
+        <input type="text" name="apartment" formControlName="apartment" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="apartment.valid||apartment.pristine">
+            The Apartment is Required
+        </div>
+    </div>
+    <button class="btn btn-primary mt-2" [disabled]="updateForm.invalid">
+        Update Address
+    </button>
+</form>

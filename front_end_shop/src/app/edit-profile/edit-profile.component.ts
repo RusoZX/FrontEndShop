@@ -49,7 +49,7 @@ export class EditProfileComponent {
           && control.get('birthdate')?.value === response.birthDate 
 
           ? {notSame:true} : null;
-      };
+        };
   
        this.updateForm = this.fb.group({
         'name': [response.name, Validators.required],

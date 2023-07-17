@@ -51,4 +51,30 @@ export class UserService {
       .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
     });
   }
+  getAddress(data:any){
+    return this.httpClient.get(this.url+"/user/address/get"+data,{
+      headers:new HttpHeaders()
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
+  }
+  editAddress(data:string){
+    return this.httpClient.post(this.url+"/user/address/edit",data,{
+      headers:new HttpHeaders()
+      .set('Content-Type','application/json')
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
+  }
+  removeAddress(data:string){
+    return this.httpClient.delete(this.url+"/user/address/remove?id="+data,{
+      headers:new HttpHeaders()
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
+  }
+  addAddress(data:string){
+    return this.httpClient.post(this.url+"/user/address/add/",data,{
+      headers:new HttpHeaders()
+      .set('Content-Type','application/json')
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
+  }
 }
