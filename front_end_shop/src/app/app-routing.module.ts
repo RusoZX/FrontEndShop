@@ -6,6 +6,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { LoginComponent } from './login/login.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ChangePwdComponent } from './change-pwd/change-pwd.component';
 
 const routes: Routes=[
   {
@@ -23,6 +24,10 @@ const routes: Routes=[
   {
     path:'user/updateProfile',
     component: EditProfileComponent
+  },
+  {
+    path:'user/changePassword',
+    component: ChangePwdComponent
   }
 ];
 

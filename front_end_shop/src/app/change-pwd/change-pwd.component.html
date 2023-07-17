@@ -1,0 +1,38 @@
+<h1>Create Account</h1>
+<form (ngSubmit)="update()" [formGroup]="changeForm" >
+    <div class="mb-2">
+        <label class="form-label">
+            Current Password:
+        </label>
+        <input type="password" name="oldPwd" formControlName="oldPwd" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="oldPwd.valid||oldPwd.pristine">
+            The Password is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            New Password:
+        </label>
+        <input type="password" name="pwd" formControlName="pwd" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="pwd.valid||pwd.pristine">
+            The New Password is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Confirm New Password:
+        </label>
+        <input type="password" name="confPwd" formControlName="confPwd" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="confPwd.valid||confPwd.pristine">
+            You need to confirm the New Password
+        </div>
+        <div class="alert alert-danger mt-2" [hidden]="validatePwd()||confPwd.pristine">
+            The Passwords dont match
+        </div>
+    </div>
+    
+
+    <button class="btn btn-danger mt-2" [disabled]="changeForm.invalid || !validatePwd()">
+        Change Password
+    </button>
+</form>

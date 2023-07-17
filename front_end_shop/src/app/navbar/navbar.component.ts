@@ -29,12 +29,13 @@ export class NavbarComponent implements OnInit{
     if(confirm(GlobalConstants.confLogout)){
       this.registered= false;
     localStorage.removeItem('jwt');
+    localStorage.removeItem('email');
     }
     
   }
   checkToken(){
     var token = localStorage.getItem('jwt');
-    if(token == '')
+    if(token == null)
       this.registered = false;
     else{
       this.userService.checkToken().subscribe(
@@ -47,6 +48,7 @@ export class NavbarComponent implements OnInit{
           localStorage.removeItem('jwt');
           if(error?.error.message == GlobalConstants.expired)
             this.snackBar.openSnackBar(GlobalConstants.expiredMsg,'error');
+          this.router.navigate(['/']);
         }
       )
     }

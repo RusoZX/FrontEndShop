@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { FormControl, Validators, FormBuilder,AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormBuilder,AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -13,7 +14,8 @@ export class EditProfileComponent {
   constructor(private fb:FormBuilder,
     private userService:UserService,
      private snackBar:SnackbarService,
-     private ngxService:NgxUiLoaderService){
+     private ngxService:NgxUiLoaderService,
+     private router:Router){
 
  }
 
@@ -40,12 +42,20 @@ export class EditProfileComponent {
    this.userService.getProfile().subscribe(
      (response:any) => {
        this.response = response;
+
+       const notSameValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+          return control.get('name')?.value === response.name
+          && control.get('surname')?.value === response.surname 
+          && control.get('birthdate')?.value === response.birthDate 
+
+          ? {notSame:true} : null;
+      };
   
        this.updateForm = this.fb.group({
         'name': [response.name, Validators.required],
         'surname': [response.surname, Validators.required],
         'birthdate': [new Date(response.birthDate).toISOString().substr(0, 10), Validators.required]
-      }, { validators: notSameValidator(response.name, response.surname, new Date(response.birthDate).toISOString().substr(0, 10)) });
+      }, { validators: notSameValidator });
       this.ngxService.stop();
      },
      error => {
@@ -65,6 +75,7 @@ export class EditProfileComponent {
      (response:any) => {
        this.ngxService.stop();
        this.snackBar.openSnackBar(response?.message,'');
+       this.router.navigate(['/user/profile']);
      },
      error => {
        console.error(error);
@@ -75,27 +86,16 @@ export class EditProfileComponent {
  }
  createJson():string{
   var result:string ="{";
-  if(this.name != this.response.name)
-    result= result +'"name":"'+this.name+'",';
-  if(this.surname != this.response.surname)
-    result= result +'"surname":"'+this.surname+'",';
-  if(this.birthdate != this.response.birthdate)
-    result= result +'"birthdate":"'+this.birthdate+'",';
+  if(this.name.value != this.response.name)
+    result= result +'"name":"'+this.name.value+'",';
+  if(this.surname.value != this.response.surname)
+    result= result +'"surname":"'+this.surname.value+'",';
+  if(this.birthdate.value != this.response.birthdate)
+    result= result +'"birthdate":"'+this.birthdate.value+'",';
 
   result = result.slice(0, -1) + "}";
   return result;
  }
+ 
 
-}
-function notSameValidator(oldName: string, oldSurname: string,oldBirthDate: string,) {
-  return (control: AbstractControl): Promise<ValidationErrors | null> => {
-    const hasDifferentValue = control.get('name')?.value != oldName
-     || control.get('surname')?.value != oldSurname 
-     || control.get('birthdate')?.value != oldBirthDate;
-     if (hasDifferentValue) {
-      return Promise.resolve({notSame:true}); // At least one control has a different value
-    }
-
-    return Promise.resolve(null);
-  };
 }

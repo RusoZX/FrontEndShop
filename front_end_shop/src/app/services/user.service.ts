@@ -38,4 +38,11 @@ export class UserService {
       .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
     });
   }
+  changePwd(data:string){
+    return this.httpClient.post(this.url+"/user/profile/changepwd",data,{
+      headers:new HttpHeaders()
+      .set('Content-Type','application/json')
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
+  }
 }

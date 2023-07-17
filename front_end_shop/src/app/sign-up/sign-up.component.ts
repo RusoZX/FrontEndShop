@@ -3,6 +3,7 @@ import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,7 +14,8 @@ export class SignUpComponent {
   constructor(private fb:FormBuilder,
      private userService:UserService,
       private snackBar:SnackbarService,
-      private ngxService:NgxUiLoaderService){
+      private ngxService:NgxUiLoaderService,
+      private router:Router){
 
   }
 
@@ -61,6 +63,7 @@ export class SignUpComponent {
       (response:any) => {
         this.ngxService.stop();
         this.snackBar.openSnackBar(response?.message,'');
+        this.router.navigate(['/login']);
       },
       error => {
         console.error(error);

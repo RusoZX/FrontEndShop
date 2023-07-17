@@ -23,6 +23,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NgxUiLoaderConfig, NgxUiLoaderModule, SPINNER } from 'ngx-ui-loader';
 import { NavbarComponent } from './navbar/navbar.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ChangePwdComponent } from './change-pwd/change-pwd.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text:"Loading...",
@@ -42,7 +43,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     LoginComponent,
     UserProfileComponent,
     NavbarComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    ChangePwdComponent
   ],
   imports: [
     BrowserModule,
