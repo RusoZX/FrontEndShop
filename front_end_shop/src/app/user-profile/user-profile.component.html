@@ -10,3 +10,12 @@
   <button mat-button routerLink="/user/updateProfile" class="btn btn-primary bg-primary mt-2">Update this data</button>
 
   <button mat-button routerLink="/user/changePassword" class="btn btn-danger bg-danger mt-2">Change my Password</button>
+
+  <h3><strong>Your Addresses</strong></h3>
+  <div class ="card" *ngFor="let address of user.addresses">
+    <div class="card-body">
+      <h4 class="card-title">Address</h4>
+      <p class="card-text"><strong>City:</strong> {{ address.city }}</p>
+      <p class="card-text"><strong>Street:</strong> {{ address.street }}</p>
+    </div>
+  </div>

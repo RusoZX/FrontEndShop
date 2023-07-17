@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Router } from '@angular/router';
+import { Observable, catchError, map, of } from 'rxjs';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -20,7 +21,8 @@ export class UserProfileComponent implements OnInit{
       name : '',
       surname:'',
       birthDate:'',
-      email:''
+      email:'',
+      addresses:[] as Address[]
     }
 
   ngOnInit(): void {
@@ -33,6 +35,15 @@ export class UserProfileComponent implements OnInit{
       this.user.surname=response.surname;
       this.user.birthDate=response.birthDate;
       this.user.email=response.email;
+      this.getAllAddress().subscribe((addresses: any[]) => {
+        this.user.addresses = addresses.map(address => {
+          return {
+            id: address.id,
+            city: address.city,
+            street: address.street
+          };
+        });
+      });
       this.ngxService.stop();
     },
     error => {
@@ -45,4 +56,20 @@ export class UserProfileComponent implements OnInit{
   )
     
   }
+  getAllAddress(): Observable<any> {
+    return this.userService.getAllAddresses().pipe(
+      catchError(error => {
+        console.error(error);
+        this.ngxService.stop();
+        this.snackBar.openSnackBar(error?.error.message, 'error');
+        this.router.navigate(['/']);
+        return of(null);
+      })
+    );
+  }
+}
+interface Address {
+  id: string;
+  city: string;
+  street: string;
 }

@@ -45,4 +45,10 @@ export class UserService {
       .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
     });
   }
+  getAllAddresses(){
+    return this.httpClient.get(this.url+"/user/address/getAll",{
+      headers:new HttpHeaders()
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
+  }
 }
