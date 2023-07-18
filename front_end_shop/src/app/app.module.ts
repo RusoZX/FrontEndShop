@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from'@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +30,7 @@ import { EditAddressComponent } from './edit-address/edit-address.component';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { BestSellersComponent } from './best-sellers/best-sellers.component';
 import { ProductComponent } from './product/product.component';
+import { SearchComponent } from './search/search.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text:"Loading...",
@@ -54,7 +56,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     EditAddressComponent,
     AddAddressComponent,
     BestSellersComponent,
-    ProductComponent
+    ProductComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +73,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatSidenavModule,
     MatListModule,
     MatDialogModule,
+    MatFormFieldModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   providers: [],

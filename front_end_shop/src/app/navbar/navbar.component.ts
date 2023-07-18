@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { SnackbarService } from '../services/snackbar.service';
 import { UserService } from '../services/user.service';
 import { GlobalConstants } from '../global-constants';
@@ -11,19 +11,22 @@ import { GlobalConstants } from '../global-constants';
 })
 export class NavbarComponent implements OnInit{
   constructor(private router:Router,
-    
     private snackBar:SnackbarService,
-    private userService:UserService){
+    private userService:UserService,
+    private route: ActivatedRoute){
 
   }
+  searching = false;
   registered = false;
   ngOnInit(): void {
-      this.checkToken();
-      this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          this.checkToken();
-        }
-      });
+    this.searching = location.pathname.startsWith('/search');
+    this.checkToken();
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.checkToken();
+      }
+    });
+      
   }
   logout(){
     if(confirm(GlobalConstants.confLogout)){
@@ -31,7 +34,6 @@ export class NavbarComponent implements OnInit{
     localStorage.removeItem('jwt');
     localStorage.removeItem('email');
     }
-    
   }
   checkToken(){
     var token = localStorage.getItem('jwt');
@@ -52,6 +54,8 @@ export class NavbarComponent implements OnInit{
         }
       )
     }
-
+  }
+  search(searchValue:string){
+    this.router.navigate(['/search/title/'+searchValue]);
   }
 }

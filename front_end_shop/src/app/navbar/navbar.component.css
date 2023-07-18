@@ -2,6 +2,7 @@
     flex: 1 1 auto;
 }
 
+
 .sidenav{
     width: 250px;
 }
@@ -10,3 +11,9 @@
     display: flex;
     flex-direction: column;
   }
+  .mr{
+    margin-right: 10px;
+}
+.ml{
+    margin-left: 10px;
+}

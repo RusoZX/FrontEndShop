@@ -1,5 +1,5 @@
-<div class="card">
-    <div class="card-body">
+<div class="card ml">
+    <div class="card-body mt">
       <h5 class="card-title">User Details</h5>
       <p class="card-text"><strong>Name:</strong> {{ user.name }}</p>
       <p class="card-text"><strong>Surname:</strong> {{ user.surname }}</p>
@@ -7,9 +7,9 @@
       <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
     </div>
   </div>
-  <button mat-button routerLink="/user/updateProfile" class="btn btn-primary bg-primary mt-2">Update this data</button>
+  <button mat-button routerLink="/user/updateProfile" class="btn btn-primary bg-primary ml mr mt">Update this data</button>
 
-  <button mat-button routerLink="/user/changePassword" class="btn btn-danger bg-danger mt-2">Change my Password</button>
+  <button mat-button routerLink="/user/changePassword" class="btn btn-danger bg-danger ml mt">Change my Password</button>
 
   <h3><strong>Your Addresses</strong></h3>
   <div class ="card" *ngFor="let address of user.addresses">
@@ -20,4 +20,4 @@
       <button mat-button routerLink="/user/address/{{ address.id}}" class="btn btn-primary bg-primary mt-2">See more</button>
     </div>
   </div>
-  <button mat-button routerLink="/user/addaddress" class="btn btn-success bg-success mt-2">Add a New Address</button>
+  <button mat-button routerLink="/user/addaddress" class="btn btn-success bg-success mt">Add a New Address</button>

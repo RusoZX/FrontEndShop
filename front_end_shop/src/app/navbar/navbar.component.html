@@ -1,7 +1,11 @@
 <mat-toolbar color="primary">
     <button mat-button routerLink="" ><mat-icon>shop</mat-icon>   Online Shop</button>
 
-    <a mat-button>Search</a>
+    <div class="input-group rounded col-md">
+        <input type="search" class="form-control rounded mr" placeholder="Search" #searchInput>
+        <button class="btn btn-outline-warning ml" (click)="search(searchInput.value)"><mat-icon>search</mat-icon></button>
+    </div>      
+
     <div class="spacer"></div>
     <button mat-button (click)="sidenav.toggle();" [hidden]="!registered" >Profile</button>
     <button mat-button routerLink="login" [hidden]="registered">Log In</button>
