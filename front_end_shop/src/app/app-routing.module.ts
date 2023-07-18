@@ -10,6 +10,8 @@ import { ChangePwdComponent } from './change-pwd/change-pwd.component';
 import { AddressComponent } from './address/address.component';
 import { EditAddressComponent } from './edit-address/edit-address.component';
 import { AddAddressComponent } from './add-address/add-address.component';
+import { BestSellersComponent } from './best-sellers/best-sellers.component';
+import { ProductComponent } from './product/product.component';
 
 const routes: Routes=[
   {
@@ -43,6 +45,16 @@ const routes: Routes=[
   {
     path:'user/addaddress',
     component: AddAddressComponent
+  },
+  //HOME PATH
+  {
+    path:'',
+    component: BestSellersComponent
+  },
+  //PRODUCTSPATHS
+  {
+    path:'product/get/:id',
+    component: ProductComponent
   }
 ];
 

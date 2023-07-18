@@ -1,0 +1,12 @@
+<div class="d-flex align-items-center justify-content-center">
+    <h2><strong>BEST SELLERS</strong></h2>
+</div>
+
+  <div class ="card" *ngFor="let product of products" (click)="goToProductDetails(product.id)">
+    <div class="card-body">
+      <h4 class="card-title">Product</h4>
+      <p class="card-text"><strong>Title:</strong> {{ product.title }}</p>
+      <p class="card-text"><strong>Price:</strong> {{ product.price }}€</p>
+      <p class="card-text"><strong>Stock:</strong> {{ product.stock }} units</p>
+    </div>
+  </div>

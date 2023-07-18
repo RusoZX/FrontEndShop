@@ -48,10 +48,11 @@ constructor(
   }
   addAddress(){
     this.ngxService.start();
-    this.userService.addAddress(JSON.stringify(this.addAddressForm)).subscribe(
+    this.userService.addAddress(JSON.stringify(this.addAddressForm.value)).subscribe(
       (response:any) => {
         this.ngxService.stop();
         this.snackBar.openSnackBar(response?.message,'');
+        
         this.router.navigate(['/user/profile']);
       },
       error => {
