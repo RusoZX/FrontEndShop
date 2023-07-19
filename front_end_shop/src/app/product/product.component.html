@@ -7,3 +7,14 @@
 <p class="card-text"><strong>Volume:</strong> {{ product.volume }}</p>
 <p class="card-text"><strong>Price:</strong> {{ product.price }}€</p>
 <p class="card-text"><strong>Stock:</strong> {{ product.stock }} units</p>
+
+
+<div>
+    <button class="btn-danger" [disabled]="quantity<=0" (click)="remove()">-</button>
+    <div class="input-group rounded col-sm">
+        <input type="search" class="form-control rounded mr"  [(ngModel)]="quantity" (input)="validateIntegerInput($event)">
+    </div>
+    <button class="btn-primary" [disabled]="quantity>=stock" (click)="add()">+</button>
+</div>
+
+<button class="btn btn-success" (click)="addToCart()">Add to shopping cart</button>

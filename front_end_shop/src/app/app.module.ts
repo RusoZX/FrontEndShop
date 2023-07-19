@@ -31,6 +31,7 @@ import { AddAddressComponent } from './add-address/add-address.component';
 import { BestSellersComponent } from './best-sellers/best-sellers.component';
 import { ProductComponent } from './product/product.component';
 import { SearchComponent } from './search/search.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text:"Loading...",
@@ -57,7 +58,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AddAddressComponent,
     BestSellersComponent,
     ProductComponent,
-    SearchComponent
+    SearchComponent,
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatFormFieldModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
-  providers: [],
+  providers: [ShoppingCartComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

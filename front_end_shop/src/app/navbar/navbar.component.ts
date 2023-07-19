@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { SnackbarService } from '../services/snackbar.service';
 import { UserService } from '../services/user.service';
 import { GlobalConstants } from '../global-constants';
+
+
+import { ShoppingCartComponent } from '../shopping-cart/shopping-cart.component';
 
 @Component({
   selector: 'app-navbar',
@@ -10,10 +13,12 @@ import { GlobalConstants } from '../global-constants';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit{
+  
+
   constructor(private router:Router,
     private snackBar:SnackbarService,
     private userService:UserService,
-    private route: ActivatedRoute){
+    private cartComponent:ShoppingCartComponent){
 
   }
   searching = false;
@@ -59,7 +64,15 @@ export class NavbarComponent implements OnInit{
     }
   }
   search(searchValue:string){
-    console.log('clicked');
     this.router.navigate(['search/title/'+searchValue]);
+  }
+  load(){
+    this.cartComponent.load();
+  }
+  update(){
+    this.cartComponent.update();
+  }
+  doNothing(){
+
   }
 }

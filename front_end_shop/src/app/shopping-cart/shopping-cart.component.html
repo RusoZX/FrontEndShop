@@ -1,0 +1,24 @@
+
+<div class="d-flex align-items-center justify-content-center">
+    <h2><strong>SHOPPING CART</strong></h2>
+</div>
+<div class ="card" *ngFor="let item of cart" >
+    <div class="card-body" (click)="goToProductDetails(item.productId)">
+    <h4 class="card-title">Product</h4>
+    <p class="card-text"><strong>Title:</strong> {{ item.title }}</p>
+    <p class="card-text"><strong>Price:</strong> {{ item.price }}€</p>
+    <p class="card-text"><strong>Stock:</strong> {{ item.stock }} units</p>
+    </div>
+    <strong>Quantity:</strong>
+    <div>
+        <button class="btn-danger" [disabled]="item.quantity<=0" (click)="remove(item)">-</button>
+        <div class="input-group rounded col-sm">
+            <input type="search" class="form-control rounded mr"  [value]="item.quantity" (ngModelChange)="validateIntegerInput($event, item)">
+        </div>
+        <button class="btn-primary" [disabled]="item.quantity>=item.stock" (click)="add(item)">+</button>
+    </div>
+    
+</div>
+<h3>Total: {{ total }}€</h3>
+<button class="btn-success" [disabled]="!valid" >BUY</button>
+<button class="btn-outline-warning" (click)="removeAll()">Remove All</button>

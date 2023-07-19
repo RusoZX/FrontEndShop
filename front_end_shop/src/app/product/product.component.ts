@@ -3,6 +3,7 @@ import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
+import { ShoppingCartService } from '../services/shopping-cart.service';
 
 @Component({
   selector: 'app-product',
@@ -14,7 +15,12 @@ export class ProductComponent implements OnInit {
     private ngxService:NgxUiLoaderService,
     private router:Router,
     private productService:ProductService,
+    private cartService: ShoppingCartService,
     private route: ActivatedRoute){}
+
+    quantity:number=0;
+    stock:number=0;
+    i=0;
     product = {
       id:'',
       title:'',
@@ -46,6 +52,7 @@ export class ProductComponent implements OnInit {
           this.product.weight= response.weight;
           this.product.volume= response.volume;
           this.product.stock= response.stock;
+          this.stock= parseInt(this.product.stock,10);
         },
         error => {
           console.error(error);
@@ -55,5 +62,39 @@ export class ProductComponent implements OnInit {
           
         });
       });
+    }
+    validateIntegerInput(event: any) {
+      const input = event.target.value;
+      const regex = /^[0-9]*$/; 
+    
+      if (!regex.test(input)) {
+        event.target.value = ""; 
+      }else{
+        this.quantity=parseInt(event.target.value);
+      }
+    }
+    add(){
+      this.quantity++;
+    }
+    remove(){
+      this.quantity--;
+    }
+    addToCart(){
+      this.ngxService.start();
+      if(localStorage.getItem('logged')==='false'){
+
+      }else{
+          this.cartService.add('{"productId":"'+this.product.id+'","quantity":"'+this.quantity+'"}').subscribe((response:any) => {
+            this.snackBar.openSnackBar(response.message,'');
+            this.ngxService.stop();
+          },
+          error => {
+            console.error(error);
+            this.ngxService.stop();
+            this.snackBar.openSnackBar(error?.error.message,'error');
+            this.router.navigate(['/']);
+            
+          });
+      }
     }
 }
