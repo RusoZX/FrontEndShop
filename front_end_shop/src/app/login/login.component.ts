@@ -43,6 +43,7 @@ export class LoginComponent {
         this.snackBar.openSnackBar(GlobalConstants.logIn,'');
         localStorage.setItem('jwt',response.token);
         localStorage.setItem('email', this.email.value);
+        localStorage.setItem('logged','true');
         this.ngxService.stop();
         this.router.navigate(['/']);
       },

@@ -33,6 +33,7 @@ export class NavbarComponent implements OnInit{
       this.registered= false;
     localStorage.removeItem('jwt');
     localStorage.removeItem('email');
+    localStorage.removeItem('logged');
     }
   }
   checkToken(){
@@ -48,6 +49,8 @@ export class NavbarComponent implements OnInit{
           console.error(error);
           this.registered= false;
           localStorage.removeItem('jwt');
+          localStorage.removeItem('email');
+          localStorage.removeItem('logged');
           if(error?.error.message == GlobalConstants.expired)
             this.snackBar.openSnackBar(GlobalConstants.expiredMsg,'error');
           this.router.navigate(['/']);
@@ -56,6 +59,7 @@ export class NavbarComponent implements OnInit{
     }
   }
   search(searchValue:string){
-    this.router.navigate(['/search/title/'+searchValue]);
+    console.log('clicked');
+    this.router.navigate(['search/title/'+searchValue]);
   }
 }

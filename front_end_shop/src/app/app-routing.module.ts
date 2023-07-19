@@ -12,6 +12,7 @@ import { EditAddressComponent } from './edit-address/edit-address.component';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { BestSellersComponent } from './best-sellers/best-sellers.component';
 import { ProductComponent } from './product/product.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes=[
   {
@@ -51,10 +52,13 @@ const routes: Routes=[
     path:'',
     component: BestSellersComponent
   },
-  //PRODUCTSPATHS
   {
     path:'product/get/:id',
     component: ProductComponent
+  },
+  {
+    path:'search/title/:search',
+    component: SearchComponent
   }
 ];
 

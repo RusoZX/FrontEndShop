@@ -1,1 +1,38 @@
-<p>search works!</p>
+
+<h3>Searching mode</h3>
+<select [(ngModel)]="mode">
+  <option value="title">By Title</option>
+  <option value="none">I feel Lucky</option>
+  <option value="category">By Category</option>
+  <option value="priceAsc">Most Expensive</option>
+  <option value="priceDesc">Cheapest</option>
+  <option value="brand">By Brand</option>
+  <option value="color">By color</option>
+  <option value="bestSellers">Option 3</option>
+</select>
+{{mode}}
+<br>
+<h3>How much products to show?</h3>
+<select [(ngModel)]="limit">
+  <option value="1">1</option>
+  <option value="5">5</option>
+  <option value="10">10</option>
+  <option value="15">15</option>
+  <option value="20">20</option>
+  <option value="30">30</option>
+</select>
+
+<div class="input-group rounded col-md" [hidden]="hide()">
+  <input type="search" class="form-control rounded mr" placeholder="Search" [(ngModel)]="search">
+</div>
+<br>
+<button class="btn btn-outline-warning ml" (click)="load()"><mat-icon>search</mat-icon></button>
+
+  <div class ="card" *ngFor="let product of products" (click)="goToProductDetails(product.id)">
+    <div class="card-body">
+      <h4 class="card-title">Product</h4>
+      <p class="card-text"><strong>Title:</strong> {{ product.title }}</p>
+      <p class="card-text"><strong>Price:</strong> {{ product.price }}€</p>
+      <p class="card-text"><strong>Stock:</strong> {{ product.stock }} units</p>
+    </div>
+  </div>
