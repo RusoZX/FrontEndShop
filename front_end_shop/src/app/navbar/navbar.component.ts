@@ -5,7 +5,6 @@ import { UserService } from '../services/user.service';
 import { GlobalConstants } from '../global-constants';
 
 
-import { ShoppingCartComponent } from '../shopping-cart/shopping-cart.component';
 
 @Component({
   selector: 'app-navbar',
@@ -17,8 +16,7 @@ export class NavbarComponent implements OnInit{
 
   constructor(private router:Router,
     private snackBar:SnackbarService,
-    private userService:UserService,
-    private cartComponent:ShoppingCartComponent){
+    private userService:UserService){
 
   }
   searching = false;
@@ -65,12 +63,6 @@ export class NavbarComponent implements OnInit{
   }
   search(searchValue:string){
     this.router.navigate(['search/title/'+searchValue]);
-  }
-  load(){
-    this.cartComponent.load();
-  }
-  update(){
-    this.cartComponent.update();
   }
   doNothing(){
 

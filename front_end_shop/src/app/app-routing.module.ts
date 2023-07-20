@@ -13,6 +13,7 @@ import { AddAddressComponent } from './add-address/add-address.component';
 import { BestSellersComponent } from './best-sellers/best-sellers.component';
 import { ProductComponent } from './product/product.component';
 import { SearchComponent } from './search/search.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 const routes: Routes=[
   {
@@ -59,6 +60,10 @@ const routes: Routes=[
   {
     path:'search/title/:search',
     component: SearchComponent
+  },
+  {
+    path:'cart/get',
+    component: ShoppingCartComponent
   }
 ];
 

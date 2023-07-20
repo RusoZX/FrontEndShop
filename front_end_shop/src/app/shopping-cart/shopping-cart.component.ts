@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import {  Router } from '@angular/router';
@@ -11,23 +11,23 @@ import { GlobalConstants } from '../global-constants';
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.css']
 })
-export class ShoppingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit,OnDestroy {
   constructor(private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private router:Router,
-    private cartService: ShoppingCartService,
-    private changeDetector: ChangeDetectorRef){}
+    private cartService: ShoppingCartService){}
 
     cart = [] as Item[];
-    valid=false;
     total= 0.0;
     origQuantities:number[]=[];
 
     ngOnInit(): void {
         this.ngxService.start();
         this.load();
-        this.calculateTotal();
         this.ngxService.stop();
+    }
+    ngOnDestroy(): void {
+        this.update();
     }
     load(){
       this.getAllItems().subscribe((items: any[]) => {
@@ -42,17 +42,13 @@ export class ShoppingCartComponent implements OnInit {
             quantity: parseInt(item.quantity)
           };
         });
+        this.calculateTotal();
         
       });
-      //does not actualize
-      this.changeDetector.detectChanges();
     }
     update(){
-      console.log(this.cart);
       for(let item of this.cart){
-        
-        console.log(item.quantity!=this.origQuantities[this.cart.indexOf(item)]);
-        if(item.quantity!=this.origQuantities[this.cart.indexOf(item)]){
+        if(item.quantity!=this.origQuantities[this.cart.indexOf(item)]&&!Number.isNaN(item.quantity)){
           this.cartService.edit('{"productId":"'+item.productId+'","quantity":"'+item.quantity+'"}').subscribe(response=>{},
             error => {
             console.error(error);
@@ -64,6 +60,7 @@ export class ShoppingCartComponent implements OnInit {
         }
       }
     }
+    
     getAllItems():Observable<any> {
       return this.cartService.get().pipe(
         catchError(error => {
@@ -80,7 +77,6 @@ export class ShoppingCartComponent implements OnInit {
     }
     calculateTotal(){
       for(let item of this.cart){
-        console.log(parseFloat(item.price) * item.quantity);
         this.total+= parseFloat(item.price) * item.quantity;
       }
     }
@@ -92,7 +88,6 @@ export class ShoppingCartComponent implements OnInit {
         event.target.value = ""; 
       }else{
         item.quantity=parseInt(event.target.value);
-        console.log(item);
       }
     }
     add(item:Item){
@@ -100,6 +95,8 @@ export class ShoppingCartComponent implements OnInit {
     }
     remove(item:Item){
       item.quantity--;
+      if(item.quantity==0)
+        this.removeItem(item);
     }
     removeAll(){
       if(confirm(GlobalConstants.confRemoveItems)){
@@ -113,6 +110,29 @@ export class ShoppingCartComponent implements OnInit {
           return of(null);
         });
       }
+    }
+    removeItem(item: Item){
+      if(confirm(GlobalConstants.confRemoveItem)){
+        this.cartService.remove(item.productId).subscribe(response=>{
+          this.load();
+        },
+          error => {
+          console.error(error);
+          this.snackBar.openSnackBar(error?.error.message, 'error');
+          this.router.navigate(['error']);
+          return of(null);
+        });
+      }
+    }
+    badQuantity(){
+      for(let item of this.cart){
+        if(item.quantity<=0||item.quantity>item.stock||Number.isNaN(item.quantity))
+          return true;
+      }
+      return false;
+    }
+    valid(item:Item){
+      return item.quantity>item.stock;
     }
     
 }
