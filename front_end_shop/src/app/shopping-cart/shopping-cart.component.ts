@@ -5,6 +5,7 @@ import {  Router } from '@angular/router';
 import { ShoppingCartService } from '../services/shopping-cart.service';
 import { Observable, catchError, of } from 'rxjs';
 import { GlobalConstants } from '../global-constants';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -15,7 +16,8 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
   constructor(private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private router:Router,
-    private cartService: ShoppingCartService){}
+    private cartService: ShoppingCartService,
+    private sharedService: SharedService){}
 
     cart = [] as Item[];
     total= 0.0;
@@ -134,6 +136,19 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     valid(item:Item){
       return item.quantity>item.stock;
     }
+    createOrder(){
+      this.sharedService.setGoods(this.createJson());
+      this.router.navigate(['createOrder/address']);
+    }
+    createJson():string{
+      var result:string ="[";
+      for(let item of this.cart){
+        result= result + '{"productId":"'+item.productId+'","quantity":"'+item.quantity+'"},'
+      }
+    
+      result = result.slice(0, -1) + "]";
+      return result;
+     }
     
 }
 interface Item{

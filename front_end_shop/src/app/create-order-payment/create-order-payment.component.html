@@ -1,0 +1,8 @@
+<h2>Payment Method</h2>
+<input type="radio" name="paymentMethod" [(ngModel)]="selectedPaymentMethod" value="card"> 
+<p>Card</p>
+<input type="radio" name="paymentMethod" [(ngModel)]="selectedPaymentMethod" value="bizum"> 
+<p>Bizum</p>
+<input type="radio" name="paymentMethod" [(ngModel)]="selectedPaymentMethod" value="cash"> 
+<p>Cash</p>
+<button class="btn btn-success" [disabled]="!selectedPaymentMethod" (click)="createOrder()">Create Order</button>

@@ -16,7 +16,6 @@
             <input type="search" class="form-control rounded mr"  [value]="item.quantity" (input)="validateIntegerInput($event, item)">
         </div>
         <button class="btn-primary" [disabled]="item.quantity>=item.stock" (click)="add(item)">+</button>
-        {{item.quantity}}-----{{item.stock}}
         <div class="alert alert-danger mt-2" [hidden]="!valid(item)">
             Not enough Stock
         </div>
@@ -24,5 +23,5 @@
     
 </div>
 <h3>Total: {{ total }}€</h3>
-<button class="btn-success" [disabled]="badQuantity()" >BUY</button>
+<button class="btn-success" (click)="createOrder()" [disabled]="badQuantity()" >BUY</button>
 <button class="btn-outline-warning" (click)="removeAll()">Remove All</button>
