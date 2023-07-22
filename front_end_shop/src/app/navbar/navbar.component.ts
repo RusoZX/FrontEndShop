@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit{
     private userService:UserService){
 
   }
+  employee = false;
   searching = false;
   registered = false;
   ngOnInit(): void {
@@ -37,6 +38,7 @@ export class NavbarComponent implements OnInit{
     localStorage.removeItem('jwt');
     localStorage.removeItem('email');
     localStorage.removeItem('logged');
+    localStorage.removeItem('role');
     }
   }
   checkToken(){
@@ -46,6 +48,14 @@ export class NavbarComponent implements OnInit{
     else{
       this.userService.checkToken().subscribe(
         (response:any) => {
+          if(response.message===GlobalConstants.employeeChecked){
+            localStorage.setItem('role','employee')
+            this.employee=true;
+          }
+          else{
+            localStorage.setItem('role','client')
+            this.employee=false;
+          }
           this.registered = true;
         },
         error => {
@@ -54,6 +64,7 @@ export class NavbarComponent implements OnInit{
           localStorage.removeItem('jwt');
           localStorage.removeItem('email');
           localStorage.removeItem('logged');
+          localStorage.removeItem('role');
           if(error?.error.message == GlobalConstants.expired)
             this.snackBar.openSnackBar(GlobalConstants.expiredMsg,'error');
           this.router.navigate(['/']);

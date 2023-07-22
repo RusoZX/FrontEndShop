@@ -9,4 +9,6 @@ export class GlobalConstants{
     public static removeAddress:string = "Are You sure to Remove this Address?";
     public static pwdUpdated:string = "Successfully updated Password";
     public static noAddress:string = "There is no Address to Edit";
+    public static orderCreated:string= "Your order was successfully created";
+    public static employeeChecked:string= "Employee checked";
 }

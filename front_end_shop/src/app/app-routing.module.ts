@@ -16,6 +16,8 @@ import { SearchComponent } from './search/search.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { CreateOrderAddressComponent } from './create-order-address/create-order-address.component';
 import { CreateOrderPaymentComponent } from './create-order-payment/create-order-payment.component';
+import { ClientOrdersComponent } from './client-orders/client-orders.component';
+import { ClientOrderComponent } from './client-order/client-order.component';
 
 const routes: Routes=[
   {
@@ -74,6 +76,14 @@ const routes: Routes=[
   {
     path:'createOrder/payment',
     component: CreateOrderPaymentComponent
+  },
+  {
+    path:'user/orders',
+    component: ClientOrdersComponent
+  },
+  {
+    path:'user/order/:id',
+    component: ClientOrderComponent
   }
 ];
 

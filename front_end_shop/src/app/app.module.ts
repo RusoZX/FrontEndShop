@@ -34,6 +34,9 @@ import { SearchComponent } from './search/search.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { CreateOrderAddressComponent } from './create-order-address/create-order-address.component';
 import { CreateOrderPaymentComponent } from './create-order-payment/create-order-payment.component';
+import { ClientOrdersComponent } from './client-orders/client-orders.component';
+import { ClientOrderComponent } from './client-order/client-order.component';
+import { EmployeeOrdersComponent } from './employee-orders/employee-orders.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text:"Loading...",
@@ -63,7 +66,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SearchComponent,
     ShoppingCartComponent,
     CreateOrderAddressComponent,
-    CreateOrderPaymentComponent
+    CreateOrderPaymentComponent,
+    ClientOrdersComponent,
+    ClientOrderComponent,
+    EmployeeOrdersComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,9 @@
+<h2>Your Orders</h2>
+<div class ="card" *ngFor="let order of orders">
+    <div class="card-body">
+        <p class="card-text"><strong>Status:</strong> {{ order.orderStatus }}</p>
+        <p class="card-text"><strong>Payment Status:</strong> {{ order.paymentStatus }}</p>
+        <p class="card-text"><strong>Day ordered:</strong> {{ order.dateCreated }}</p>
+        <button mat-button routerLink="/user/order/{{ order.id }}" class="btn btn-primary bg-primary mt-2">See more</button>
+    </div>
+</div>

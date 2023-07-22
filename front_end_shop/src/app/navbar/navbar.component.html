@@ -1,14 +1,18 @@
-<mat-toolbar color="primary">
-    <button mat-button routerLink="" ><mat-icon>shop</mat-icon>Online Shop</button>
+<mat-toolbar color="primary" >
+    <button mat-button routerLink="" (click)="sidenav.opened?sidenav.toggle():doNothing();employeeSidenav.opened?employeeSidenav.toggle():doNothing();"><mat-icon>shop</mat-icon>Online Shop</button>
 
-    <div class="input-group rounded col-md" [hidden]="searching">
-        <input type="search" class="form-control rounded mr" placeholder="Search" #searchInput>
+    <div class="input-group rounded col-md" [hidden]="searching" (click)="sidenav.opened?sidenav.toggle():doNothing();employeeSidenav.opened?employeeSidenav.toggle():doNothing();">
+        <input type="search" class="form-control rounded mr" placeholder="Search" #searchInput >
         <button class="btn btn-outline-warning ml" (click)="search(searchInput.value)"><mat-icon>search</mat-icon></button>
     </div>      
 
-    <div class="spacer"></div>
-    <button mat-button (click)="sidenav.toggle();" [hidden]="!registered" >Profile</button>
-    <button mat-button routerLink="cart/get" [hidden]="!registered" ><mat-icon>shopping_cart</mat-icon>></button>
+    <div class="spacer" (click)="sidenav.opened?sidenav.toggle():doNothing();employeeSidenav.opened?employeeSidenav.toggle():doNothing();"></div>
+    <button mat-button (click)="employeeSidenav.toggle();sidenav.opened?sidenav.toggle():doNothing();" [hidden]="!employee" >Shop Management</button>
+    <button mat-button (click)="sidenav.toggle();employeeSidenav.opened?employeeSidenav.toggle():doNothing();" [hidden]="!registered" >Profile</button>
+
+    <button mat-button routerLink="cart/get" [hidden]="!registered"
+     (click)="sidenav.opened?sidenav.toggle():doNothing();employeeSidenav.opened?employeeSidenav.toggle():doNothing();" ><mat-icon>shopping_cart</mat-icon>></button>
+
     <button mat-button routerLink="login" [hidden]="registered">Log In</button>
     <button mat-button routerLink="signup" [hidden]="registered" color="accent">Sign Up</button>
 </mat-toolbar>
@@ -16,11 +20,20 @@
     <mat-sidenav #sidenav class="sidenav" position="end">
         <mat-nav-list> 
             <a mat-list-item routerLink="user/profile" (click)="sidenav.toggle();">Your data</a>
-            <button mat-list-item (click)="logout();sidenav.toggle();" class="is-danger">Log Out</button>
+            <a mat-list-item routerLink="user/orders" (click)="sidenav.toggle();">Your orders</a>
+            <button mat-list-item (click)="logout();sidenav.toggle();" class="btn-danger">Log Out</button>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav #employeeSidenav class="sidenav" position="end" [hidden]="!employee">
+        <mat-nav-list> 
+            <a mat-list-item routerLink="employee/orders" (click)="employeeSidenav.toggle();">Orders</a>
+            <a mat-list-item routerLink="employee/addProduct" (click)="employeeSidenav.toggle();">Add Product</a>
+            <a mat-list-item routerLink="employee/categories" (click)="employeeSidenav.toggle();">Manage Categories</a>
+            <a mat-list-item routerLink="employee/revenue" (click)="employeeSidenav.toggle();">Revenue</a>
         </mat-nav-list>
     </mat-sidenav>
     
-    <mat-sidenav-content (click)="sidenav.opened?sidenav.toggle():doNothing();" class="content-wrapper">
+    <mat-sidenav-content (click)="sidenav.opened?sidenav.toggle():doNothing();employeeSidenav.opened?employeeSidenav.toggle():doNothing();" class="content-wrapper">
             <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

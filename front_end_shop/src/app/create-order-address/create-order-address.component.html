@@ -3,7 +3,7 @@
 <button class="btn btn-outline-success" (click)="toggleAddresses()"><mat-icon>home</mat-icon><br>Delivery</button>
 <button class="btn btn-outline-success" (click)="toggleShops()"><mat-icon>shop</mat-icon><br>Take at Shop</button>
 
-<div [hidden]="addresses">
+<div [hidden]="!addresses">
     <h3><strong>Choose an Adress</strong></h3>
     <div class ="card" *ngFor="let address of addressesList">
         <div class="card-body">
@@ -11,11 +11,10 @@
         <h4 class="card-title">Address</h4>
         <p class="card-text"><strong>City:</strong> {{ address.city }}</p>
         <p class="card-text"><strong>Street:</strong> {{ address.street }}</p>
-        <button mat-button routerLink="/user/address/{{ address.id}}" class="btn btn-primary bg-primary mt-2">See more</button>
         </div>
     </div>
 </div>
-<div [hidden]="shops">
+<div [hidden]="!shops">
     <h3><strong>Choose a Shop</strong></h3>
     <select [(ngModel)]="shopValue">
         <option value=0>Madrid</option>
