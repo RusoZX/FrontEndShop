@@ -36,4 +36,22 @@ export class ProductService {
   getByColor(limit:number, search: string){
     return this.httpClient.get(this.url+"/product/getByColor?limit="+limit+"&search="+search);
   }
+  addProduct(data:string){
+    console.log('inside addProducts'+data);
+    return this.httpClient.post(this.url+"/product/add",data,{
+      headers:new HttpHeaders()
+      .set('Content-Type','application/json')
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
+  }
+  updateProduct(data:string){
+    return this.httpClient.post(this.url+"/product/edits",data,{
+      headers:new HttpHeaders()
+      .set('Content-Type','application/json')
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
+  }
+  getCategories(){
+    return this.httpClient.get(this.url+"/product/getCategories");
+  }
 }

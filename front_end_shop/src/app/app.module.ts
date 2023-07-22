@@ -38,6 +38,8 @@ import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { EmployeeOrdersComponent } from './employee-orders/employee-orders.component';
 import { EmployeeOrderComponent } from './employee-order/employee-order.component';
+import { CreateProductComponent } from './create-product/create-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text:"Loading...",
@@ -71,7 +73,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ClientOrdersComponent,
     ClientOrderComponent,
     EmployeeOrdersComponent,
-    EmployeeOrderComponent
+    EmployeeOrderComponent,
+    CreateProductComponent,
+    EditProductComponent
   ],
   imports: [
     BrowserModule,
