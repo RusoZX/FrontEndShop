@@ -1,1 +1,24 @@
-<p>employee-orders works!</p>
+
+<h3>Searching mode</h3>
+<select [(ngModel)]="mode">
+  <option value="none">Recent</option>
+  <option value="month">Last Month</option>
+  <option value="week">Last Week</option>
+  <option value="pending">Pending</option>
+  <option value="byUser">By User</option>
+</select>
+<button class="btn btn-outline-warning ml" (click)="load()"><mat-icon>search</mat-icon></button>
+<div class="input-group rounded col-md" [hidden]="hide()">
+    <input type="search" class="form-control rounded mr" placeholder="Search" [(ngModel)]="search">
+</div>
+<h2>Orders</h2>
+<div class ="card" *ngFor="let order of orders">
+    <div class="card-body">
+        <p class="card-text"><strong>User:</strong> {{ order.userName }}</p>
+        <p class="card-text"><strong>Status:</strong> {{ order.orderStatus }}</p>
+        <p class="card-text"><strong>Payment Status:</strong> {{ order.paymentStatus }}</p>
+        <p class="card-text"><strong>Day ordered:</strong> {{ order.createdDate }}</p>
+        <p class="card-text"><strong>Total Revenue:</strong> {{ order.totalRevenue }}</p>
+        <button mat-button routerLink="/employee/order/{{ order.id }}" class="btn btn-warning bg-warning mt-2">Actions</button>
+    </div>
+</div>

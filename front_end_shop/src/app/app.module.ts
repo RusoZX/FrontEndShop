@@ -37,6 +37,7 @@ import { CreateOrderPaymentComponent } from './create-order-payment/create-order
 import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
 import { EmployeeOrdersComponent } from './employee-orders/employee-orders.component';
+import { EmployeeOrderComponent } from './employee-order/employee-order.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text:"Loading...",
@@ -69,7 +70,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CreateOrderPaymentComponent,
     ClientOrdersComponent,
     ClientOrderComponent,
-    EmployeeOrdersComponent
+    EmployeeOrdersComponent,
+    EmployeeOrderComponent
   ],
   imports: [
     BrowserModule,

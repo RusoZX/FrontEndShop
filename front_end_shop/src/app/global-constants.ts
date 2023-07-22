@@ -11,4 +11,10 @@ export class GlobalConstants{
     public static noAddress:string = "There is no Address to Edit";
     public static orderCreated:string= "Your order was successfully created";
     public static employeeChecked:string= "Employee checked";
+    public static statusArray:string[]= [
+        "pending",
+        "preparing delivery",
+        "in delivery",
+        "delivered"
+    ]
 }

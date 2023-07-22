@@ -27,7 +27,8 @@ export class ClientOrderComponent implements OnInit {
     orderStatus:'',
     paymentStatus:'',
     paymentMethod:'',
-    deliveryMethod:''
+    deliveryMethod:'',
+    createdDate:''
   };
   address={
     id:'',
@@ -45,6 +46,7 @@ export class ClientOrderComponent implements OnInit {
         this.order.paymentStatus=response.paymentStatus;
         this.order.paymentMethod=response.paymentMethod;
         this.order.deliveryMethod=response.deliveryMethod;
+        this.order.createdDate=response.dateCreated;
 
         this.userService.getAddress(response.addressId).subscribe((addressResponse:any)=>{
           this.address.id=addressResponse.addressId;

@@ -1,0 +1,10 @@
+<h3 >Order</h3>
+<p ><strong>Status:</strong> {{ order.orderStatus }}</p>
+<p ><strong>Payment Status:</strong> {{ order.paymentStatus }}</p>
+<p ><strong>Payent Method:</strong> {{ order.paymentMethod }}</p>
+<p ><strong>Delivery Method:</strong> {{ order.deliveryMethod }}</p>
+<p ><strong>Day Ordered:</strong> {{ order.createdDate }}</p>
+<button class="btn btn-outline-warning ml" (click)="updatePayment()"
+ [disabled]="order.paymentStatus">Update Payment</button>
+ <button class="btn btn-outline-warning ml" (click)="updateStatus()"
+ [disabled]="!order.paymentStatus||!valid()">Update Status</button>

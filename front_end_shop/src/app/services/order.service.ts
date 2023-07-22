@@ -35,4 +35,18 @@ export class OrderService {
       .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
     })
   }
+  getEmployeeOrders(data:string,search:string){
+    return this.httpClient.get(this.url + "/order/getAllOrders" + (data !== 'none' ? "?mode=" + data + (search !== '' ? "&search=" + search : "") : ""),{
+      headers:new HttpHeaders()
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    })
+  }
+  updateOrder(data:string){
+    return this.httpClient.post(this.url+"/order/updateStatus",data,{
+      headers:new HttpHeaders()
+      .set('Content-Type','application/json')
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
+  }
+  
 }

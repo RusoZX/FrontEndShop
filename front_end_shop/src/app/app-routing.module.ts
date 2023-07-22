@@ -18,6 +18,8 @@ import { CreateOrderAddressComponent } from './create-order-address/create-order
 import { CreateOrderPaymentComponent } from './create-order-payment/create-order-payment.component';
 import { ClientOrdersComponent } from './client-orders/client-orders.component';
 import { ClientOrderComponent } from './client-order/client-order.component';
+import { EmployeeOrdersComponent } from './employee-orders/employee-orders.component';
+import { EmployeeOrderComponent } from './employee-order/employee-order.component';
 
 const routes: Routes=[
   {
@@ -84,6 +86,14 @@ const routes: Routes=[
   {
     path:'user/order/:id',
     component: ClientOrderComponent
+  },
+  {
+    path:'employee/orders',
+    component: EmployeeOrdersComponent
+  },
+  {
+    path:'employee/order/:id',
+    component: EmployeeOrderComponent
   }
 ];
 

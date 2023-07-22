@@ -4,7 +4,6 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { Observable, catchError, of } from 'rxjs';
-import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -12,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class SearchComponent implements OnInit {
   constructor(private snackBar:SnackbarService,
-
     private ngxService:NgxUiLoaderService,
     private router:Router,
     private route:ActivatedRoute,
