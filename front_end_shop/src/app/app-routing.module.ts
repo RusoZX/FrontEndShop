@@ -21,6 +21,7 @@ import { ClientOrderComponent } from './client-order/client-order.component';
 import { EmployeeOrdersComponent } from './employee-orders/employee-orders.component';
 import { EmployeeOrderComponent } from './employee-order/employee-order.component';
 import { CreateProductComponent } from './create-product/create-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 const routes: Routes=[
   {
@@ -99,6 +100,10 @@ const routes: Routes=[
   {
     path:'employee/addProduct',
     component: CreateProductComponent
+  },
+  {
+    path:'employee/editProduct',
+    component: EditProductComponent
   }
 ];
 

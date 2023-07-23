@@ -19,6 +19,23 @@ export class SharedService {
     deliveryMethod:'',
     paymentMethod:''
   }
+  product = {
+    id:'',
+    title:'',
+    category:'',
+    price:'',
+    brand:'',
+    color:'',
+    weight:'',
+    volume:'',
+    stock:''
+  }
+  setProduct(obj:any){
+    this.product=obj;
+  }
+  getProduct():any{
+    return this.product;
+  }
   setAddress(obj:any){
     this.address=obj;
   }

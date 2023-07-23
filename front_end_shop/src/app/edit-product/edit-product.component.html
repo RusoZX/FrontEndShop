@@ -1,1 +1,104 @@
-<p>edit-product works!</p>
+<form (ngSubmit)="update()" [formGroup]="productForm" >
+    <div class="mb-2">
+        <label class="form-label">
+            Title:
+        </label>
+        <input type="text" name="title" formControlName="title" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="title.valid||title.pristine">
+            The Title is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Category:
+        </label>
+        <select [formControl]="productForm.controls.category" (change)="toggleInput()">
+            <ng-container *ngFor="let category of categories">
+                <option  value="{{ category }}">{{ category }}</option>
+            </ng-container>
+            <option value="">Create a new category</option>
+        </select>
+        <input type="text" name="category" formControlName="category" class="form-control"[hidden]="!createNew">
+        <div class="alert alert-danger mt-2" [hidden]="category.valid||!createNew">
+            The Category is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Price:
+        </label>
+        <input type="number" name="price" formControlName="price" class="form-control">
+        
+        <div class="alert alert-danger mt-2" [hidden]="price.valid||price.pristine">
+            <span *ngIf="price?.errors?.['required']">
+                The Price is required
+            </span>
+            <span *ngIf="price?.errors?.['min']">
+                The minimum price is 0.1
+            </span>
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Brand:
+        </label>
+        <input type="text" name="brand" formControlName="brand" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="brand.valid||brand.pristine">
+            The Brand is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Color:
+        </label>
+        <input type="text" name="color" formControlName="color" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="color.valid||color.pristine">
+            The Color is Required
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Weight:
+        </label>
+        <input type="number" name="weight" formControlName="weight" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="weight.valid||weight.pristine">
+            <span *ngIf="weight?.errors?.['required']">
+                The Weight is required
+            </span>
+            <span *ngIf="weight?.errors?.['min']">
+                The minimum Weight is 0.1
+            </span>
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Volume:
+        </label>
+        <input type="number" name="volume" formControlName="volume" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="volume.valid||volume.pristine">
+            <span *ngIf="volume?.errors?.['required']">
+                The Volume is required
+            </span>
+            <span *ngIf="volume?.errors?.['min']">
+                The minimum Volume is 0.1
+            </span>
+        </div>
+    </div>
+    <div class="mb-2">
+        <label class="form-label">
+            Initial Stock:
+        </label>
+        <input type="number" name="stock" formControlName="stock" class="form-control">
+        <div class="alert alert-danger mt-2" [hidden]="stock.valid||stock.pristine">
+            <span *ngIf="stock?.errors?.['required']">
+                The Initial Stock is required
+            </span>
+            <span *ngIf="stock?.errors?.['positiveInteger']">
+                The minimum Initial Stock is 1
+            </span>
+        </div>
+    </div>
+    <button class="btn btn-primary mt-2" [disabled]="productForm.invalid">
+        Edit Product
+    </button>
+</form>

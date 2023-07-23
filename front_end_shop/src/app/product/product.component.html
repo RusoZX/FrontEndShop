@@ -9,6 +9,8 @@
 <p class="card-text"><strong>Stock:</strong> {{ product.stock }} units</p>
 
 
+<button class="btn-warning" [disabled]="hideEmployee()" (click)="editProduct()">Edit Product</button>
+
 <div>
     <button class="btn-danger" [disabled]="quantity<=0" (click)="remove()">-</button>
     <div class="input-group rounded col-sm">

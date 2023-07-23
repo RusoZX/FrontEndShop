@@ -45,7 +45,7 @@ export class ProductService {
     });
   }
   updateProduct(data:string){
-    return this.httpClient.post(this.url+"/product/edits",data,{
+    return this.httpClient.post(this.url+"/product/edit",data,{
       headers:new HttpHeaders()
       .set('Content-Type','application/json')
       .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
@@ -53,5 +53,11 @@ export class ProductService {
   }
   getCategories(){
     return this.httpClient.get(this.url+"/product/getCategories");
+  }
+  removeProduct(id:string){
+    return this.httpClient.delete(this.url+"/product/remove"+id,{
+      headers:new HttpHeaders()
+      .set('Authorization', 'Bearer '+localStorage.getItem('jwt'))
+    });
   }
 }

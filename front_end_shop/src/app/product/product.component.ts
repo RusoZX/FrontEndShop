@@ -4,6 +4,8 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { ShoppingCartService } from '../services/shopping-cart.service';
+import { SharedService } from '../services/shared.service';
+import { GlobalConstants } from '../global-constants';
 
 @Component({
   selector: 'app-product',
@@ -16,6 +18,7 @@ export class ProductComponent implements OnInit {
     private router:Router,
     private productService:ProductService,
     private cartService: ShoppingCartService,
+    private sharedService:SharedService,
     private route: ActivatedRoute){}
 
     quantity:number=0;
@@ -96,5 +99,12 @@ export class ProductComponent implements OnInit {
             
           });
       }
+    }
+    hideEmployee(){
+      return localStorage.getItem('role')!='employee';
+    }
+    editProduct(){
+      this.sharedService.setProduct(this.product);
+      this.router.navigate(['employee/editProduct']);
     }
 }
