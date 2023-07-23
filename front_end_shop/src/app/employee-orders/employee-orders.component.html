@@ -12,13 +12,15 @@
     <input type="search" class="form-control rounded mr" placeholder="Search" [(ngModel)]="search">
 </div>
 <h2>Orders</h2>
+
+<h3><strong>Total Revenue:</strong>{{ totalRevenue }}€</h3>
 <div class ="card" *ngFor="let order of orders">
     <div class="card-body">
         <p class="card-text"><strong>User:</strong> {{ order.userName }}</p>
         <p class="card-text"><strong>Status:</strong> {{ order.orderStatus }}</p>
         <p class="card-text"><strong>Payment Status:</strong> {{ order.paymentStatus }}</p>
         <p class="card-text"><strong>Day ordered:</strong> {{ order.createdDate }}</p>
-        <p class="card-text"><strong>Total Revenue:</strong> {{ order.totalRevenue }}</p>
+        <p class="card-text"><strong>Total Revenue:</strong> {{ order.totalRevenue }} €</p>
         <button mat-button routerLink="/employee/order/{{ order.id }}" class="btn btn-warning bg-warning mt-2">Actions</button>
     </div>
 </div>

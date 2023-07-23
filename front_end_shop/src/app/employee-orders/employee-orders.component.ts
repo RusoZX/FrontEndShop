@@ -14,9 +14,8 @@ export class EmployeeOrdersComponent implements OnInit {
   constructor(private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private router:Router,
-    private route:ActivatedRoute,
     private orderService:OrderService){}
-
+    totalRevenue=0.0;
     orders = [] as Order[];
     mode:string='none';
     search:string='';
@@ -25,9 +24,11 @@ export class EmployeeOrdersComponent implements OnInit {
     }
 
     load(){
+      this.totalRevenue=0.0;
       this.ngxService.start();
       this.getOrders().subscribe((orders:any[])=>{
         this.orders= orders.map(order =>{
+          this.totalRevenue+=parseFloat(order.totalRevenue);
           return{
             id:order.id,
             userName:order.userName,
