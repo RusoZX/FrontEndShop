@@ -1,4 +1,15 @@
 <form (ngSubmit)="update()" [formGroup]="productForm" >
+
+    
+    <div class="mb-2">
+        <label class="form-label">
+            Image:
+        </label>
+        <input type="file" name="img" formControlName="img" class="form-control" (change)="saveFile($event)">
+        <div class="alert alert-danger mt-2" [hidden]="img.valid||img.pristine">
+            The allowed files are .png and .jpeg
+        </div>
+    </div>
     <div class="mb-2">
         <label class="form-label">
             Title:

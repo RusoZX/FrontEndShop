@@ -21,6 +21,7 @@ export class EditProductComponent implements OnInit{
     private fb:FormBuilder,
     private sharedService:SharedService){}
     createNew=false;
+    file:any;
     categories:string[]=[];
     product = {
       id:'',
@@ -34,6 +35,7 @@ export class EditProductComponent implements OnInit{
       stock:''
     }
     productForm = this.fb.group({
+      'img':['', correctFormatValidator()],
       'title': ['', Validators.required],
       'category': ['', Validators.required],
       'price': ['', [Validators.required, Validators.min(0.1)]],
@@ -43,6 +45,9 @@ export class EditProductComponent implements OnInit{
       'volume': ['', [Validators.required, Validators.min(0.1)]],
       'stock': ['', [Validators.required, positiveIntegerValidator()]],
     });
+    get img(){
+      return this.productForm.get('img') as FormControl;
+    }
     get title(){
       return this.productForm.get('title') as FormControl;
     }
@@ -87,10 +92,12 @@ export class EditProductComponent implements OnInit{
             && control.get('weight')?.value === this.product.weight
             && control.get('volume')?.value === this.product.volume
             && control.get('stock')?.value === this.product.stock
+            && control.get('img')?.value === ''
 
             ? {same:true} : null;
           };
           this.productForm = this.fb.group({
+            'img':['',correctFormatValidator()],
             'title': [this.product.title, Validators.required],
             'category': [this.product.category, Validators.required],
             'price': [this.product.price, [Validators.required, Validators.min(0.1)]],
@@ -120,16 +127,31 @@ export class EditProductComponent implements OnInit{
       (this.productForm.get('weight') as FormControl).setValue( parseFloat((this.productForm.get('weight') as FormControl).value).toFixed(2));
       (this.productForm.get('volume') as FormControl).setValue( parseFloat((this.productForm.get('volume') as FormControl).value).toFixed(2));
       this.ngxService.start();
-      this.productService.updateProduct(this.createJson()).subscribe((response:any)=>{
-        this.snackBar.openSnackBar(response.message,'');
-        this.ngxService.stop();
-        this.router.navigate(['/']);
-      },error=>{
-        console.error(error);
+      if(this.productForm.getError('same'))
+        this.productService.updateProduct(this.createJson()).subscribe((response:any)=>{
+          this.snackBar.openSnackBar(response.message,'');
           this.ngxService.stop();
-          this.snackBar.openSnackBar(error?.error.message,'error');
-          this.router.navigate(['/error']);
-      });
+          this.router.navigate(['/']);
+        },error=>{
+          console.error(error);
+            this.ngxService.stop();
+            this.snackBar.openSnackBar(error?.error.message,'error');
+            this.router.navigate(['/error']);
+        });
+      if(this.productForm.get('img')?.value!==''){
+        const formData = new FormData();
+          formData.append('file', this.file);
+        this.productService.updateImg(this.product.id,formData).subscribe((response:any)=>{
+          this.snackBar.openSnackBar(response.message,'');
+          this.ngxService.stop();
+          this.router.navigate(['/']);
+        },error=>{
+          console.error(error);
+            this.ngxService.stop();
+            this.snackBar.openSnackBar(error?.error.message,'error');
+            this.router.navigate(['/error']);
+        });
+      }
     }
     toggleInput() {
       const selectedValue = this.productForm.controls.category.value;
@@ -159,6 +181,9 @@ export class EditProductComponent implements OnInit{
       result = result.slice(0, -1) + "}";
       return result;
      }
+     saveFile(event:any){
+      this.file = event.target.files[0];
+     }
   }
   function positiveIntegerValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
@@ -169,4 +194,13 @@ export class EditProductComponent implements OnInit{
       return null;
     };
   }
-
+  function correctFormatValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value:string= control.value;
+      const type = value.substring(value.lastIndexOf('.')+1);
+      if (type!=='png'&&type!=='jpeg') {
+        return { 'badFormat': true };
+      }
+      return null;
+    };
+  }
