@@ -20,7 +20,7 @@ export class ProductComponent implements OnInit {
     private cartService: ShoppingCartService,
     private sharedService:SharedService,
     private route: ActivatedRoute){}
-
+    image:any;
     quantity:number=0;
     stock:number=0;
     i=0;
@@ -56,6 +56,7 @@ export class ProductComponent implements OnInit {
           this.product.volume= response.volume;
           this.product.stock= response.stock;
           this.stock= parseInt(this.product.stock,10);
+          this.image= `data:image/${response.type};base64,${response.imageData}`;
         },
         error => {
           console.error(error);

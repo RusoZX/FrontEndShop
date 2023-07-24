@@ -30,6 +30,7 @@
   <div class ="card" *ngFor="let product of products" (click)="goToProductDetails(product.id)">
     <div class="card-body">
       <h4 class="card-title">Product</h4>
+      <img src="{{ product.image!=='data:image/null;base64,null'?product.image:'assets/images/no-product-image.png' }}" alt="Image" width="150" height="150">
       <p class="card-text"><strong>Title:</strong> {{ product.title }}</p>
       <p class="card-text"><strong>Price:</strong> {{ product.price }}€</p>
       <p class="card-text"><strong>Stock:</strong> {{ product.stock }} units</p>
