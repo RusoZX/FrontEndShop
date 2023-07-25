@@ -3,7 +3,7 @@ import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { GlobalConstants } from '../global-constants';
 @Component({
   selector: 'app-change-pwd',
@@ -16,7 +16,22 @@ export class ChangePwdComponent {
      private snackBar:SnackbarService,
      private ngxService:NgxUiLoaderService,
      private router:Router){
-
+      this.router.events.subscribe(event => {
+        //Here we have a list of the permited routes
+        const listRoutes=['/user/profile']
+        if (event instanceof NavigationEnd) {
+          const lastRoute = event.url;
+          var ok=false;
+          for(let route of listRoutes){
+            if(lastRoute.startsWith(route))
+              ok=true;
+          }
+          if(!ok){
+            this.snackBar.openSnackBar('BAD ACCESS','error');
+            this.router.navigate(['/']);
+          }
+        }
+      })
  }
 
  changeForm = this.fb.group({

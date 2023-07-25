@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { OrderService } from '../services/order.service';
 import { Observable, catchError, of } from 'rxjs';
 
@@ -14,7 +14,13 @@ export class EmployeeOrdersComponent implements OnInit {
   constructor(private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private router:Router,
-    private orderService:OrderService){}
+    private orderService:OrderService){
+      
+      if(localStorage.getItem('role')!=='employee'){
+        this.snackBar.openSnackBar('BAD ACCESS','error');
+        this.router.navigate(['/']);
+      }
+    }
     totalRevenue=0.0;
     orders = [] as Order[];
     mode:string='none';

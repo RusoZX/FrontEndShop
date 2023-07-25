@@ -1,5 +1,5 @@
 import { Component , OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { OrderService } from '../services/order.service';
 import { SnackbarService } from '../services/snackbar.service';
@@ -18,6 +18,22 @@ export class EmployeeOrderComponent implements OnInit{
     private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private router:Router){
+      this.router.events.subscribe(event => {
+        //Here we have a list of the permited routes
+        const listRoutes=['/employee/orders']
+        if (event instanceof NavigationEnd) {
+          const lastRoute = event.url;
+          var ok=false;
+          for(let route of listRoutes){
+            if(lastRoute.startsWith(route))
+              ok=true;
+          }
+          if(!ok&&localStorage.getItem('role')!=='employee'){
+            this.snackBar.openSnackBar('BAD ACCESS','error');
+            this.router.navigate(['/']);
+          }
+        }
+      })
     }
 
     order={

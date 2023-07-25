@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { UserService } from '../services/user.service';
 import { SnackbarService } from '../services/snackbar.service';
@@ -20,7 +20,22 @@ export class AddressComponent implements OnInit{
     private ngxService:NgxUiLoaderService,
     private router:Router,
     private shared:SharedService){
-
+      this.router.events.subscribe(event => {
+        //Here we have a list of the permited routes
+        const listRoutes=['/user/profile']
+        if (event instanceof NavigationEnd) {
+          const lastRoute = event.url;
+          var ok=false;
+          for(let route of listRoutes){
+            if(lastRoute.startsWith(route))
+              ok=true;
+          }
+          if(!ok){
+            this.snackBar.openSnackBar('BAD ACCESS','error');
+            this.router.navigate(['/']);
+          }
+        }
+      })
   }
   ngOnInit(): void {
     this.load();

@@ -3,7 +3,7 @@ import { SharedService } from '../services/shared.service';
 import { UserService } from '../services/user.service';
 import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { GlobalConstants } from '../global-constants';
 import { FormControl, Validators, FormBuilder,AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
@@ -18,7 +18,24 @@ export class EditAddressComponent implements OnInit {
     private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private router:Router,
-    private fb:FormBuilder){}
+    private fb:FormBuilder){
+      this.router.events.subscribe(event => {
+        //Here we have a list of the permited routes
+        const listRoutes=['/user/address']
+        if (event instanceof NavigationEnd) {
+          const lastRoute = event.url;
+          var ok=false;
+          for(let route of listRoutes){
+            if(lastRoute.startsWith(route))
+              ok=true;
+          }
+          if(!ok){
+            this.snackBar.openSnackBar('BAD ACCESS','error');
+            this.router.navigate(['/']);
+          }
+        }
+      })
+    }
   address = {
     id:'',
     country:'',

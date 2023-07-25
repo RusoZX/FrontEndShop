@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { ShoppingCartService } from '../services/shopping-cart.service';
 import { SharedService } from '../services/shared.service';
-import { GlobalConstants } from '../global-constants';
 
 @Component({
   selector: 'app-product',
@@ -19,7 +18,25 @@ export class ProductComponent implements OnInit {
     private productService:ProductService,
     private cartService: ShoppingCartService,
     private sharedService:SharedService,
-    private route: ActivatedRoute){}
+    private route: ActivatedRoute){
+      this.router.events.subscribe(event => {
+        //Here we have a list of the permited routes
+        const listRoutes=['/search/','/cart/get','']
+        if (event instanceof NavigationEnd) {
+          const lastRoute = event.url;
+          var ok=false;
+          for(let route of listRoutes){
+            if(lastRoute.startsWith(route))
+              ok=true;
+          }
+          if(!ok){
+            this.snackBar.openSnackBar('BAD ACCESS','error');
+            this.router.navigate(['/']);
+          }
+        }
+      })
+    }
+    referer = document.referrer;
     image:any;
     quantity:number=0;
     stock:number=0;
@@ -36,6 +53,7 @@ export class ProductComponent implements OnInit {
       stock:''
     }
     ngOnInit(): void {
+      this.referer = document.referrer;
       this.ngxService.start();
       this.load();
       this.ngxService.stop();

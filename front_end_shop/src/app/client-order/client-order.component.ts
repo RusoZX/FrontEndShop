@@ -1,7 +1,7 @@
 import { Component , OnInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SnackbarService } from '../services/snackbar.service';
 import { Observable, catchError, of } from 'rxjs';
 import { UserService } from '../services/user.service';
@@ -16,7 +16,24 @@ export class ClientOrderComponent implements OnInit {
     private router:Router,
     private route:ActivatedRoute,
     private snackBar:SnackbarService,
-    private ngxService:NgxUiLoaderService){}
+    private ngxService:NgxUiLoaderService){
+      this.router.events.subscribe(event => {
+        //Here we have a list of the permited routes
+        const listRoutes=['/user/orders']
+        if (event instanceof NavigationEnd) {
+          const lastRoute = event.url;
+          var ok=false;
+          for(let route of listRoutes){
+            if(lastRoute.startsWith(route))
+              ok=true;
+          }
+          if(!ok){
+            this.snackBar.openSnackBar('BAD ACCESS','error');
+            this.router.navigate(['/']);
+          }
+        }
+      })
+    }
 
   ngOnInit(): void {
     this.ngxService.start();

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { FormControl, Validators, FormBuilder,AbstractControl, ValidatorFn } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { Observable, catchError, of } from 'rxjs';
@@ -16,7 +16,15 @@ export class CreateProductComponent implements OnInit{
     private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private router:Router,
-    private fb:FormBuilder){}
+    private fb:FormBuilder){
+      this.router.events.subscribe(event => {
+          if(localStorage.getItem('role')!=='employee'){
+            this.snackBar.openSnackBar('BAD ACCESS','error');
+            this.router.navigate(['/']);
+          }
+        
+      })
+    }
     createNew=false;
     categories:string[]=[];
     product = {

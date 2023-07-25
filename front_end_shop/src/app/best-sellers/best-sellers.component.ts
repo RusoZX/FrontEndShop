@@ -30,7 +30,8 @@ export class BestSellersComponent implements OnInit {
             id: product.id,
             title: product.title,
             price: product.price,
-            stock: product.stock
+            stock: product.stock,
+            image: `data:image/${product.type};base64,${product.imageData}`
           };
         });
       });
@@ -56,4 +57,5 @@ interface Product{
   title: string;
   price: string;
   stock: string;
+  image:any;
 }
