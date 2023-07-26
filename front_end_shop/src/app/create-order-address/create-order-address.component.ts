@@ -16,11 +16,10 @@ export class CreateOrderAddressComponent implements OnInit{
     private ngxService:NgxUiLoaderService,
     private router:Router,
     private sharedService:SharedService){
-      this.router.events.subscribe(event => {
         //Here we have a list of the permited routes
         const listRoutes=['/cart/get']
-        if (event instanceof NavigationEnd) {
-          const lastRoute = event.url;
+          const lastRoute = this.sharedService.getPrev();
+          this.sharedService.setPrev(this.router.url);
           var ok=false;
           for(let route of listRoutes){
             if(lastRoute.startsWith(route))
@@ -30,8 +29,7 @@ export class CreateOrderAddressComponent implements OnInit{
             this.snackBar.openSnackBar('BAD ACCESS','error');
             this.router.navigate(['/']);
           }
-        }
-      })
+        
     }
 
   addresses=true;

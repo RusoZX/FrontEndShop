@@ -6,6 +6,7 @@ import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Router } from '@angular/router';
 import { GlobalConstants } from '../global-constants';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-employee-order',
@@ -17,12 +18,12 @@ export class EmployeeOrderComponent implements OnInit{
     private orderService:OrderService,
     private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
-    private router:Router){
-      this.router.events.subscribe(event => {
+    private router:Router,
+    private sharedService:SharedService){
         //Here we have a list of the permited routes
         const listRoutes=['/employee/orders']
-        if (event instanceof NavigationEnd) {
-          const lastRoute = event.url;
+          const lastRoute = this.sharedService.getPrev();
+          this.sharedService.setPrev(this.router.url);
           var ok=false;
           for(let route of listRoutes){
             if(lastRoute.startsWith(route))
@@ -32,8 +33,7 @@ export class EmployeeOrderComponent implements OnInit{
             this.snackBar.openSnackBar('BAD ACCESS','error');
             this.router.navigate(['/']);
           }
-        }
-      })
+        
     }
 
     order={

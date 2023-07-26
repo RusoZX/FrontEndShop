@@ -5,6 +5,7 @@ import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Router } from '@angular/router';
 import { Observable, catchError, of } from 'rxjs';
+import { SharedService } from '../services/shared.service';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -14,8 +15,9 @@ export class UserProfileComponent implements OnInit{
   constructor(private userService:UserService,
     private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
-    private router:Router){
-
+    private router:Router,
+    private sharedService:SharedService){
+      this.sharedService.setPrev(this.router.url);
     }
     user ={
       name : '',
@@ -24,7 +26,6 @@ export class UserProfileComponent implements OnInit{
       email:'',
       addresses:[] as Address[]
     }
-
   ngOnInit(): void {
       this.load();
   }

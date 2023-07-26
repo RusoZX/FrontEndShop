@@ -5,6 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { FormControl, Validators, FormBuilder,AbstractControl, ValidatorFn } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { Observable, catchError, of } from 'rxjs';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-create-product',
@@ -16,14 +17,14 @@ export class CreateProductComponent implements OnInit{
     private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private router:Router,
-    private fb:FormBuilder){
-      this.router.events.subscribe(event => {
+    private fb:FormBuilder,
+    private sharedService:SharedService){
+        this.sharedService.setPrev(this.router.url);
           if(localStorage.getItem('role')!=='employee'){
             this.snackBar.openSnackBar('BAD ACCESS','error');
             this.router.navigate(['/']);
           }
         
-      })
     }
     createNew=false;
     categories:string[]=[];

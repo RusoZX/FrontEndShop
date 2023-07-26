@@ -4,6 +4,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { Observable, catchError, of } from 'rxjs';
+import { SharedService } from '../services/shared.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -14,7 +15,10 @@ export class SearchComponent implements OnInit {
     private ngxService:NgxUiLoaderService,
     private router:Router,
     private route:ActivatedRoute,
-    private productService:ProductService){}
+    private productService:ProductService,
+    private sharedService:SharedService){
+      this.sharedService.setPrev(this.router.url);
+    }
 
     products = [] as Product[]
     limit = 10;

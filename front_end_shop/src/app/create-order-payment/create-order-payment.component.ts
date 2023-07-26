@@ -20,11 +20,10 @@ export class CreateOrderPaymentComponent {
     private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private cartService:ShoppingCartService){
-      this.router.events.subscribe(event => {
         //Here we have a list of the permited routes
         const listRoutes=['/createOrder/address']
-        if (event instanceof NavigationEnd) {
-          const lastRoute = event.url;
+          const lastRoute = this.sharedService.getPrev();
+          this.sharedService.setPrev(this.router.url);
           var ok=false;
           for(let route of listRoutes){
             if(lastRoute.startsWith(route))
@@ -34,8 +33,7 @@ export class CreateOrderPaymentComponent {
             this.snackBar.openSnackBar('BAD ACCESS','error');
             this.router.navigate(['/']);
           }
-        }
-      })
+        
   }
   selectedPaymentMethod: string='card';
 

@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SharedService {
+  private prev='';
   private address = {
     id:'',
     country:'',
@@ -19,7 +20,7 @@ export class SharedService {
     deliveryMethod:'',
     paymentMethod:''
   }
-  product = {
+  private product = {
     id:'',
     title:'',
     category:'',
@@ -29,6 +30,12 @@ export class SharedService {
     weight:'',
     volume:'',
     stock:''
+  }
+  setPrev(url:string){
+    this.prev=url;
+  }
+  getPrev(){
+    return this.prev;
   }
   setProduct(obj:any){
     this.product=obj;

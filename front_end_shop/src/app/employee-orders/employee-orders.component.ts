@@ -4,6 +4,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { OrderService } from '../services/order.service';
 import { Observable, catchError, of } from 'rxjs';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-employee-orders',
@@ -14,8 +15,9 @@ export class EmployeeOrdersComponent implements OnInit {
   constructor(private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private router:Router,
-    private orderService:OrderService){
-      
+    private orderService:OrderService,
+    private sharedService:SharedService){
+      this.sharedService.setPrev(this.router.url);
       if(localStorage.getItem('role')!=='employee'){
         this.snackBar.openSnackBar('BAD ACCESS','error');
         this.router.navigate(['/']);

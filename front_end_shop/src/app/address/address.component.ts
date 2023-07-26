@@ -20,11 +20,10 @@ export class AddressComponent implements OnInit{
     private ngxService:NgxUiLoaderService,
     private router:Router,
     private shared:SharedService){
-      this.router.events.subscribe(event => {
         //Here we have a list of the permited routes
         const listRoutes=['/user/profile']
-        if (event instanceof NavigationEnd) {
-          const lastRoute = event.url;
+          const lastRoute = this.shared.getPrev();
+          this.shared.setPrev(this.router.url);
           var ok=false;
           for(let route of listRoutes){
             if(lastRoute.startsWith(route))
@@ -34,8 +33,7 @@ export class AddressComponent implements OnInit{
             this.snackBar.openSnackBar('BAD ACCESS','error');
             this.router.navigate(['/']);
           }
-        }
-      })
+        
   }
   ngOnInit(): void {
     this.load();

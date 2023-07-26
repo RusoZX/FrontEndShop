@@ -1,27 +1,36 @@
-<h2 class="card-title">Product</h2>
-
-<img src="{{ image!=='data:image/null;base64,null'?image:'assets/images/no-product-image.png' }}" alt="Image" width="150" height="150">
-
-
-<p class="card-text"><strong>Title:</strong> {{ product.title }}</p>
-<p class="card-text"><strong>Category:</strong> {{ product.category }}</p>
-<p class="card-text"><strong>Brand:</strong> {{ product.brand }}</p>
-<p class="card-text"><strong>Color:</strong> {{ product.color }}</p>
-<p class="card-text"><strong>Weight:</strong> {{ product.weight }}</p>
-<p class="card-text"><strong>Volume:</strong> {{ product.volume }}</p>
-<p class="card-text"><strong>Price:</strong> {{ product.price }}€</p>
-<p class="card-text"><strong>Stock:</strong> {{ product.stock }} units</p>
-
-
-<button class="btn-warning" [disabled]="hideEmployee()" (click)="editProduct()">Edit Product</button>
-
-<div>
-    <button class="btn-danger" [disabled]="quantity<=0" (click)="remove()">-</button>
-    <div class="input-group rounded col-sm">
-        <input type="search" class="form-control rounded mr"  [(ngModel)]="quantity" (input)="validateIntegerInput($event)">
-    </div>
-    <button class="btn-primary" [disabled]="quantity>=stock" (click)="add()">+</button>
+<section class="white page two columns tablet padding">
+<div class="type">
+    <img src="{{ image!=='data:image/null;base64,null'?image:'assets/images/no-product-image.png' }}" alt="Image" class="trim">
 </div>
-
-<button class="btn btn-success" (click)="addToCart()">Add to shopping cart</button>
-{{ referer }}
+<div class="type">
+    <h1 class="big"><strong>Title:</strong> {{ product.title }}</h1>
+    <br>
+    <p class="card-text"><strong>Category:</strong> {{ product.category }}</p>
+    <br>
+    <p class="card-text"><strong>Brand:</strong> {{ product.brand }}</p>
+    <br>
+    <p class="card-text"><strong>Color:</strong> {{ product.color }}</p>
+    <br>
+    <p class="card-text"><strong>Weight:</strong> {{ product.weight }}</p>
+    <br>
+    <p class="card-text"><strong>Volume:</strong> {{ product.volume }}</p>
+    <br>
+    <p class="card-text"><strong>Price:</strong> {{ product.price }}€</p>
+    <br>
+    <p class="card-text"><strong>Stock:</strong> {{ product.stock }} units</p>
+    <br>
+    <div class="button-container">
+        <button class="btn-danger" [disabled]="quantity<=0" (click)="remove()">-</button>
+        <input type="search" class="form-control rounded w-50"  [(ngModel)]="quantity" (input)="validateIntegerInput($event)">
+        <button class="btn-primary" [disabled]="quantity>=stock" (click)="add()">+</button>
+    </div>
+    <div class="alert alert-danger mt-2" [hidden]="!valid()">
+        Bad Quantity
+    </div>
+    <br>
+    <p class="type two columns tablet">
+        <button class="btn btn-success" (click)="addToCart()" [disabled]="valid()">Add to shopping cart</button>
+        <button class="btn-warning" [disabled]="hideEmployee()" (click)="editProduct()">Edit Product</button>
+    </p>
+</div>
+</section>

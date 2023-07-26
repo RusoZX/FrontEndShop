@@ -4,6 +4,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../services/snackbar.service';
 import { Observable, catchError, of } from 'rxjs';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-client-orders',
@@ -14,7 +15,10 @@ export class ClientOrdersComponent implements OnInit {
   constructor(private orderService: OrderService,
     private router:Router,
     private snackBar:SnackbarService,
-    private ngxService:NgxUiLoaderService){}
+    private ngxService:NgxUiLoaderService,
+    private sharedService:SharedService){
+      this.sharedService.setPrev(router.url);
+    }
 
   ngOnInit(): void {
       this.load();

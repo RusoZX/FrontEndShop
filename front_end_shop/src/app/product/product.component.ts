@@ -19,11 +19,10 @@ export class ProductComponent implements OnInit {
     private cartService: ShoppingCartService,
     private sharedService:SharedService,
     private route: ActivatedRoute){
-      this.router.events.subscribe(event => {
         //Here we have a list of the permited routes
         const listRoutes=['/search/','/cart/get','']
-        if (event instanceof NavigationEnd) {
-          const lastRoute = event.url;
+          const lastRoute = this.sharedService.getPrev();
+          this.sharedService.setPrev(this.router.url);
           var ok=false;
           for(let route of listRoutes){
             if(lastRoute.startsWith(route))
@@ -33,8 +32,7 @@ export class ProductComponent implements OnInit {
             this.snackBar.openSnackBar('BAD ACCESS','error');
             this.router.navigate(['/']);
           }
-        }
-      })
+        
     }
     referer = document.referrer;
     image:any;
@@ -118,6 +116,9 @@ export class ProductComponent implements OnInit {
             
           });
       }
+    }
+    valid(){
+      return this.quantity>parseInt(this.product.stock)||this.quantity==0;
     }
     hideEmployee(){
       return localStorage.getItem('role')!='employee';

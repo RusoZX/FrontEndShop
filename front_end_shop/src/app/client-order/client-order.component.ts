@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SnackbarService } from '../services/snackbar.service';
 import { Observable, catchError, of } from 'rxjs';
 import { UserService } from '../services/user.service';
+import { SharedService } from '../services/shared.service';
 @Component({
   selector: 'app-client-order',
   templateUrl: './client-order.component.html',
@@ -16,12 +17,12 @@ export class ClientOrderComponent implements OnInit {
     private router:Router,
     private route:ActivatedRoute,
     private snackBar:SnackbarService,
-    private ngxService:NgxUiLoaderService){
-      this.router.events.subscribe(event => {
+    private ngxService:NgxUiLoaderService,
+    private sharedService:SharedService){
         //Here we have a list of the permited routes
         const listRoutes=['/user/orders']
-        if (event instanceof NavigationEnd) {
-          const lastRoute = event.url;
+          const lastRoute = this.sharedService.getPrev();
+          this.sharedService.setPrev(this.router.url);
           var ok=false;
           for(let route of listRoutes){
             if(lastRoute.startsWith(route))
@@ -31,8 +32,7 @@ export class ClientOrderComponent implements OnInit {
             this.snackBar.openSnackBar('BAD ACCESS','error');
             this.router.navigate(['/']);
           }
-        }
-      })
+        
     }
 
   ngOnInit(): void {

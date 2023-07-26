@@ -17,7 +17,9 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     private ngxService:NgxUiLoaderService,
     private router:Router,
     private cartService: ShoppingCartService,
-    private sharedService: SharedService){}
+    private sharedService: SharedService){
+      this.sharedService.setPrev(this.router.url);
+    }
 
     cart = [] as Item[];
     total= 0.0;

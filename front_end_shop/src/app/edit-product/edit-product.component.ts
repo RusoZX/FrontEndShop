@@ -20,11 +20,10 @@ export class EditProductComponent implements OnInit{
     private router:Router,
     private fb:FormBuilder,
     private sharedService:SharedService){
-      this.router.events.subscribe(event => {
         //Here we have a list of the permited routes
         const listRoutes=['/product/get']
-        if (event instanceof NavigationEnd) {
-          const lastRoute = event.url;
+          const lastRoute = this.sharedService.getPrev();
+          this.sharedService.setPrev(this.router.url);
           var ok=false;
           for(let route of listRoutes){
             if(lastRoute.startsWith(route))
@@ -34,8 +33,7 @@ export class EditProductComponent implements OnInit{
             this.snackBar.openSnackBar('BAD ACCESS','error');
             this.router.navigate(['/']);
           }
-        }
-      })
+        
     }
     createNew=false;
     file:any;

@@ -5,6 +5,7 @@ import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { NavigationEnd, Router } from '@angular/router';
 import { GlobalConstants } from '../global-constants';
+import { SharedService } from '../services/shared.service';
 @Component({
   selector: 'app-change-pwd',
   templateUrl: './change-pwd.component.html',
@@ -15,12 +16,12 @@ export class ChangePwdComponent {
     private userService:UserService,
      private snackBar:SnackbarService,
      private ngxService:NgxUiLoaderService,
-     private router:Router){
-      this.router.events.subscribe(event => {
+     private router:Router,
+     private sharedService:SharedService){
         //Here we have a list of the permited routes
         const listRoutes=['/user/profile']
-        if (event instanceof NavigationEnd) {
-          const lastRoute = event.url;
+          const lastRoute = this.sharedService.getPrev();
+          this.sharedService.setPrev(this.router.url);
           var ok=false;
           for(let route of listRoutes){
             if(lastRoute.startsWith(route))
@@ -30,10 +31,11 @@ export class ChangePwdComponent {
             this.snackBar.openSnackBar('BAD ACCESS','error');
             this.router.navigate(['/']);
           }
-        }
-      })
+        
  }
-
+ verifyUrl(){
+  
+ }
  changeForm = this.fb.group({
    'oldPwd': ['', Validators.required],
    'pwd': ['', Validators.required],
@@ -51,7 +53,6 @@ export class ChangePwdComponent {
  }
  
  ngOnInit(): void{
-
  }
  validatePwd(){
    return this.changeForm.controls['pwd'].value == this.changeForm.controls['confPwd'].value

@@ -4,6 +4,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { Observable, catchError, of } from 'rxjs';
+import { SharedService } from '../services/shared.service';
 @Component({
   selector: 'app-best-sellers',
   templateUrl: './best-sellers.component.html',
@@ -13,7 +14,10 @@ export class BestSellersComponent implements OnInit {
   constructor(private snackBar:SnackbarService,
     private ngxService:NgxUiLoaderService,
     private router:Router,
-    private productService:ProductService){}
+    private productService:ProductService,
+    private sharedService:SharedService){
+      this.sharedService.setPrev(this.router.url);
+    }
 
     products = [] as Product[]
 

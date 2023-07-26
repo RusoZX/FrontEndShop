@@ -4,6 +4,7 @@ import { SnackbarService } from '../services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { FormControl, Validators, FormBuilder,AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -15,24 +16,24 @@ export class EditProfileComponent {
     private userService:UserService,
      private snackBar:SnackbarService,
      private ngxService:NgxUiLoaderService,
-     private router:Router){
-      this.router.events.subscribe(event => {
-        //Here we have a list of the permited routes
-        const listRoutes=['/user/profile']
-        if (event instanceof NavigationEnd) {
-          const lastRoute = event.url;
-          var ok=false;
-          for(let route of listRoutes){
-            if(lastRoute.startsWith(route))
-              ok=true;
-          }
-          if(!ok){
-            this.snackBar.openSnackBar('BAD ACCESS','error');
-            this.router.navigate(['/']);
-          }
-        }
-      })
+     private router:Router,
+     private sharedService:SharedService){
+      const listRoutes=['/user/profile']
+      const lastRoute = this.sharedService.getPrev();
+      var ok=false;
+      console.log('here'+lastRoute);
+      for(let route of listRoutes){
+        if(lastRoute.startsWith(route))
+          ok=true;
+      }
+      if(!ok){
+        this.snackBar.openSnackBar('BAD ACCESS','error');
+        this.router.navigate(['/']);
+      }
+      this.sharedService.setPrev(this.router.url);
+    
  }
+ 
 
  updateForm = this.fb.group({
   'name': ['', Validators.required],
