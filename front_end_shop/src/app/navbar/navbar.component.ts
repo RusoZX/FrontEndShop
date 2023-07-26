@@ -39,6 +39,7 @@ export class NavbarComponent implements OnInit{
     localStorage.removeItem('email');
     localStorage.removeItem('logged');
     localStorage.removeItem('role');
+    this.router.navigate(['/']);
     }
   }
   checkToken(){

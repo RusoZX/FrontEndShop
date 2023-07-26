@@ -1,5 +1,4 @@
 
-<h3>Searching mode</h3>
 <div class="d-flex align-items-center justify-content-center">
   <label for="search-mode" class="tight padding">Search Mode:</label>
   <select  [(ngModel)]="mode" id="search-mode" class="border rounded padding margin-bottom">
@@ -29,7 +28,7 @@
   </div>
 </div>
 
-  <div class="container m-4">
+<div class="container m-4">
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       <div class="col" *ngFor="let product of products" (click)="goToProductDetails(product.id)">
           <div class="card mb-3" style="max-width: 700px;">
